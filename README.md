@@ -5,7 +5,7 @@ CryptoHelp este un Single Page Application destinat persoanelor ce vor sa urmare
 
 #### Descriere problemă
 In ultimii ani, Cryptomonedele au luat amploare in domeniul investitiilor, drept urmare o aplicatie precum CryptoHelp vine in ajutorul persoanelor interesate de acest tip de active. 
-In cadrul aplicatiei, sunt incarcate 25 de cryptomonede, impreuna cu pretul acestora. Totodata, interfata pune la dispozitia utilizatorului inca 2 modalitati de conversie a pretului, din in Euro, respectiv Lira Sterlina. 
+In cadrul aplicatiei, sunt incarcate 25 de cryptomonede, impreuna cu pretul acestora. Totodata, interfata pune la dispozitia utilizatorului inca 2 modalitati de conversie a pretului, din Dolari in Euro, respectiv Lira Sterlina. 
 
 #### Descriere API 
 Pentru realizarea acestei aplicatii, au fost utilizate doua API-uri de tip REST:
@@ -47,6 +47,25 @@ db.collection("users").doc(currentUser.id).get().then((doc) => {
 
 #### Flux de date
 Utilizatorul interactioneaza pentru prima data cu aplicatia in momentul autentificarii, aceasta realizandu-se prin Google. Odata autentificat, utilizatorul este dus catre dashboard, unde poate vedea o lista cu cryptomonede existente si o lista cu cryptomonede favorite. Din lista cu cryptomonede existente, acesta isi poate alege si adauga in lista de urmarire.
+
+#### Request/response 
+Pentru gestionarea cererilor/raspunsurilor facute/primite de la API, s-a folosit axios, iar un exemplu poate fi vazut dupa cum urmeaza: 
+```
+    const options = {
+      method: 'GET',
+      url: 'https://currency-exchange.p.rapidapi.com/exchange',
+      params: {to: currency, from: 'USD', q: '1.0'},
+      headers: {
+        'x-rapidapi-key': '00ad0163a5msh6cd633284bbf7d3p15fb30jsn2e5ffa5f8c73',
+        'x-rapidapi-host': 'currency-exchange.p.rapidapi.com'
+      }
+    };
+    axios.request(options).then(function (response) {
+      setCurrencyConversion(response.data);
+    }).catch(function (error) {
+        console.error(error);
+    });
+```
 
 ### Publicarea
 Aplicatia a fost publicata folosind heroku si poate fi accesata la adresa: https://crypyohelp.herokuapp.com/
