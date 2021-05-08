@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin: .5rem;
+    margin: .25rem;
 }
 
 .dashboards {
@@ -15,4 +15,11 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.logOut {
+    align-self: flex-end;
+    /* position: fixed;
+    margin-top: 10;
+    right: 10; */
 }

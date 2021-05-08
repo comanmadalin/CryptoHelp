@@ -7,21 +7,17 @@ export const SignIn = ( { setUser } ) => {
 
    const authenticate = () => {
        auth.signInWithPopup(googleProvider).then(res => {
-
            let loggedUser = {
                displayName: res.additionalUserInfo.profile.given_name,
                id: res.additionalUserInfo.profile.id
            }
 
         if (res.additionalUserInfo.isNewUser) {
-          
             db.collection("users").doc(loggedUser.id).set({
-     
-                photos: []
-          
+                cryptos: []
             })
             .then((docRef) => {
-                console.log("Document written with ID: ", docRef.id);
+                console.log("Document written with ID: ");
             })
             .catch((error) => {
                 console.error("Error adding document: ", error);

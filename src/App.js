@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     axios.defaults.headers.common['Authorization'] = process.env.REACT_APP_PEXELS_KEY;
-  })
+  });
 
   return (
     <div className="App">
