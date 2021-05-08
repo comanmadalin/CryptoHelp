@@ -79,3 +79,12 @@ npm install
 npm start
 ```
 Project is running on port 3000 -> http://localhost:3000/
+
+![Dashboard](https://github.com/comanmadalin/CryptoHelp/blob/main/Dashboard.png)
+![Authentication](https://github.com/comanmadalin/CryptoHelp/blob/main/Auth.png)
+
+### Referinte
+- https://reactjs.org/
+- https://www.npmjs.com/package/axios
+- https://firebase.google.com/docs/auth
+- https://firebase.google.com/docs/web/setup
