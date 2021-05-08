@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# CryptoHelp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Introducere 
+CryptoHelp este un Single Page Application destinat persoanelor ce vor sa urmareasca evolutia pretului cryptomonedelor.
 
-## Available Scripts
+#### Descriere problemă
+In ultimii ani, Cryptomonedele au luat amploare in domeniul investitiilor, drept urmare o aplicatie precum CryptoHelp vine in ajutorul persoanelor interesate de acest tip de active. 
+In cadrul aplicatiei, sunt incarcate 25 de cryptomonede, impreuna cu pretul acestora. Totodata, interfata pune la dispozitia utilizatorului inca 2 modalitati de conversie a pretului, din in Euro, respectiv Lira Sterlina. 
 
-In the project directory, you can run:
+#### Descriere API 
+Pentru realizarea acestei aplicatii, au fost utilizate doua API-uri de tip REST:
+##### 1. coinpaprika1
+Acest API a folosit pentru popularea UI-ului cu date despre cryptomonede: denumire si pretul actual. 
 
-### `npm start`
+##### 2. currency-exchange
+Acest API a fost folosit pentru convesia pretului cryptomonedei, din Dolari americani in Lire sterline/ Euro
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Servicii cloud
+##### 1. Firestore Authentication
+Pentru autentificare, s-a folosit Google Authentication, pus la dispozitie de Firebase. Autentificare se face prin pop-up, iar apelul este urmatorul: 
+```
+auth.signInWithPopup(googleProvider).then(res => {
+   let loggedUser = {
+       displayName: res.additionalUserInfo.profile.given_name,
+       id: res.additionalUserInfo.profile.id
+   }
+}
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+##### 2. Cloud Firestore
+In cadrul aplicatiei a fost necesara si stocarea persistenta, in cazul cryptomonedelor favorite. Acestea se stocheaza intr-un vector in documetentul specific fiecarui utilizator. Un exemplu de apel, poate fi cel de aducere in UI cryptomonedele salvate: 
+```
+db.collection("users").doc(currentUser.id).get().then((doc) => {
+  if (doc.exists) {
+    let coins = [];
+    doc.data().cryptos.map(index => {
+      coins.push({...fetchedCoins[index], index})
+    });
+    setUserCryptos(coins);
+  } else {
+    console.log("No such document!");
+  }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+```
 
-### `npm test`
+#### Flux de date
+Utilizatorul interactioneaza pentru prima data cu aplicatia in momentul autentificarii, aceasta realizandu-se prin Google. Odata autentificat, utilizatorul este dus catre dashboard, unde poate vedea o lista cu cryptomonede existente si o lista cu cryptomonede favorite. Din lista cu cryptomonede existente, acesta isi poate alege si adauga in lista de urmarire.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Publicarea
+Aplicatia a fost publicata folosind heroku si poate fi accesata la adresa: https://crypyohelp.herokuapp.com/
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Rularea locala
+Pentru a rula acest proiect local, sunt necesari urmatorii pasi:
+```
+git clone this repository
+cd cryptohelp
+npm install
+npm start
+```
+Project is running on port 3000 -> http://localhost:3000/
