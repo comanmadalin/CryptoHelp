@@ -1,0 +1,28 @@
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #08545857;
+  margin: 1rem;
+  height: 70vh;
+  width: 40vw;
+  border-radius: 4px;
+  overflow: auto;
+  box-shadow: 0px 0px 34px 5px #66ecf327;
+}
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  border: 2px solid white;
+  background-color: gainsboro;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #119DA4;
+  border-radius: 2px;
+}
